@@ -84,10 +84,9 @@ export default function Page() {
                 <TableRow key={symbol}>
                   <TableCell>{symbol}</TableCell>
                   <TableCell>
-                    {status.price
+                    {status.price !== undefined
                       ? status.price.toLocaleString("ko-KR", {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
+                          maximumFractionDigits: 10, // 종목마다 다른 소수점 표현 허용
                         })
                       : "-"}
                   </TableCell>
