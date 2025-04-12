@@ -3,12 +3,12 @@
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-// ✅ 직접 타입을 정의하여 next-themes에 의존하지 않도록 처리
-type Attribute = "class" | "style" | (string & {}); // 공식 타입 참고
+// 🔧 정확한 타입 정의 (attribute: "class" | "style" | Array)
+type Attribute = "class" | "style";
 
 interface CustomThemeProviderProps {
   children: React.ReactNode;
-  attribute?: Attribute;
+  attribute?: Attribute | Attribute[];
   defaultTheme?: string;
   enableSystem?: boolean;
   disableTransitionOnChange?: boolean;
