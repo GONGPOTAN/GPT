@@ -3,15 +3,20 @@
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-// ✅ next-themes 내부 정의에 맞춘 정확한 타입 지정
-type ThemeProviderProps = {
+// ✅ 허용되는 attribute 값만 명시적으로 타입 지정
+type AttributeType = "class" | "data-theme";
+
+interface CustomThemeProviderProps {
   children: React.ReactNode;
-  attribute?: "class";
+  attribute?: AttributeType;
   defaultTheme?: string;
   enableSystem?: boolean;
   disableTransitionOnChange?: boolean;
-};
+}
 
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+export function ThemeProvider({
+  children,
+  ...props
+}: CustomThemeProviderProps) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
 }
