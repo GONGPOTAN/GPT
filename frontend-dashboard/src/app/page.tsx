@@ -25,7 +25,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/status");
+        const res = await fetch("https://gpt-wez9.onrender.com/api/status");
         const json = await res.json();
         setData(json);
       } catch (error) {
