@@ -1,0 +1,6 @@
+pandas
+requests
+websockets
+python-dotenv
+aiosqlite
+schedule
