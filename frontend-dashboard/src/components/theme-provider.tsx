@@ -1,10 +1,9 @@
-// frontend-dashboard/src/components/theme-provider.tsx
 "use client";
 
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-// ✅ 타입을 직접 정의하여 'next-themes/dist/types' 의존 제거
+// 🔧 직접 타입 선언하여 next-themes 타입 의존성 제거
 interface ThemeProviderProps {
   children: React.ReactNode;
   attribute?: string;
