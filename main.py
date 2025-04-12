@@ -24,7 +24,8 @@ import uvicorn
 from backend_api import api  # ← FastAPI 앱(app)은 여기서 가져옵니다.
 
 def start_fastapi():
-    uvicorn.run(api.app, host="127.0.0.1", port=8000, log_level="info")
+    # ✅ Render 등 외부 서비스에서 접근 가능하도록 0.0.0.0 으로 변경
+    uvicorn.run(api.app, host="0.0.0.0", port=8000, log_level="info")
 
 if __name__ == "__main__":
     print("🚀 GPT-Trading-Bot 시스템 시작")
