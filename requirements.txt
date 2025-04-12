@@ -7,4 +7,3 @@ schedule
 uvicorn
 aiohttp
 fastapi
-fastapi
