@@ -34,14 +34,13 @@ export default function Page() {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 5000); // 5초마다 새로고침
+    const interval = setInterval(fetchData, 5000);
     return () => clearInterval(interval);
   }, []);
 
-  // ✅ UTC → KST 변환 함수
   const formatKST = (utcString: string) => {
     const date = new Date(utcString);
-    const kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000); // 9시간 더하기
+    const kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
     return kstDate.toLocaleString("ko-KR", {
       year: "numeric",
       month: "numeric",
@@ -54,15 +53,12 @@ export default function Page() {
 
   return (
     <main className="pt-6 px-4 md:px-10">
-      {/* 💣 대시보드 메인 타이틀 */}
       <h1 className="text-3xl font-extrabold mb-2">
         💣GONGPOTAN Trading Bot Dashboard
       </h1>
 
-      {/* 📊 실시간 시세 섹션 타이틀 */}
       <h2 className="text-xl font-semibold mb-4">📊 실시간 시세 대시보드</h2>
 
-      {/* 데이터 테이블 카드 */}
       <Card>
         <CardContent className="overflow-x-auto p-4">
           <Table>
