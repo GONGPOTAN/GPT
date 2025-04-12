@@ -3,7 +3,7 @@
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-// ✅ 직접 타입 선언
+// ✅ 직접 타입 정의로 대체
 interface ThemeProviderProps {
   children: React.ReactNode;
   attribute?: string;
