@@ -1,5 +1,3 @@
-# main.py
-
 import asyncio
 import subprocess
 import platform
@@ -18,13 +16,14 @@ from utils.scheduler import start_schedulers
 from core.signal_worker import signal_worker
 from core.volume_summary_worker import volume_summary_worker  # 거래량 유지 요약 워커
 from core.rsi_trend_worker import rsi_trend_worker  # ✅ RSI/Trend 캐시 업데이트 워커
+from core.price_worker import price_worker  # ✅ 가격 캐시 업데이트 워커 추가
 
 # ✅ FastAPI 서버 함께 실행
 import uvicorn
 from backend_api import api  # ← FastAPI 앱(app)은 여기서 가져옵니다.
 
 def start_fastapi():
-    # ✅ Render 등 외부 서비스에서 접근 가능하도록 0.0.0.0 으로 변경
+    # ✅ Render 등 외부 서비스에서 접근 가능하도록 0.0.0.0 으로 설정
     uvicorn.run(api.app, host="0.0.0.0", port=8000, log_level="info")
 
 if __name__ == "__main__":
@@ -32,6 +31,8 @@ if __name__ == "__main__":
     print(" - 실시간 WebSocket 구독 (M1)")
     print(" - 시그널 분석 (M15~D)")
     print(" - 텔레그램 알림 송신")
+    print(" - FastAPI 서버 실행")
+    print(" - 상태 캐시(price/rsi/trend) 주기적 갱신")
 
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
@@ -43,7 +44,8 @@ if __name__ == "__main__":
     loop.create_task(start_ws_listener())
     loop.create_task(signal_worker())
     loop.create_task(volume_summary_worker())
-    loop.create_task(rsi_trend_worker())  # ✅ RSI 및 추세 캐시 갱신
+    loop.create_task(rsi_trend_worker())     # ✅ RSI 및 추세 캐시 갱신
+    loop.create_task(price_worker())         # ✅ 실시간 가격 캐시 갱신 추가
 
     # 시그널 분석/리포트 예약
     start_schedulers(
