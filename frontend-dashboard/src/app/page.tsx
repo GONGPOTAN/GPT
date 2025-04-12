@@ -12,7 +12,7 @@ import {
 
 interface StatusData {
   [key: string]: {
-    price: number;
+    price: number | null;
     rsi: Record<string, number>;
     trend: Record<string, string>;
     updated_at: string;
@@ -84,7 +84,7 @@ export default function Page() {
                 <TableRow key={symbol}>
                   <TableCell>{symbol}</TableCell>
                   <TableCell>
-                    {status.price !== undefined
+                    {status.price !== null && status.price !== undefined
                       ? status.price.toLocaleString("ko-KR", {
                           maximumFractionDigits: 10, // 종목마다 다른 소수점 표현 허용
                         })
