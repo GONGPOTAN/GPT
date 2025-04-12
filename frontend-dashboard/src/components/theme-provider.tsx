@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-// ✅ 직접 타입 정의로 대체
+
+// ✅ 타입을 직접 정의해서 next-themes/dist/types 의존 제거
 interface ThemeProviderProps {
   children: React.ReactNode;
   attribute?: string;
