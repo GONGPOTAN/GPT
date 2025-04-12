@@ -6,3 +6,4 @@ aiosqlite
 schedule
 uvicorn
 aiohttp
+fastapifastapi
