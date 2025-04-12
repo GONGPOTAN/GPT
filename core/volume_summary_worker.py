@@ -3,7 +3,7 @@
 import asyncio
 from datetime import datetime
 from core.signal_queue import signal_queue
-from utils.cache import status_cache  # ✅ 실시간 거래량 정보 불러오기
+from core.status_cache import status_cache  # ✅ 실시간 거래량 정보 불러오기
 
 # 유지 종목을 시간 단위로 그룹핑
 volume_ongoing_pool = {}

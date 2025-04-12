@@ -25,7 +25,7 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("https://gpt-wez9.onrender.com/api/status");
+        const res = await fetch("https://gpt-trading-bot.fly.dev/api/status");
         const json = await res.json();
         setData(json);
       } catch (error) {
@@ -86,7 +86,7 @@ export default function Page() {
                   <TableCell>
                     {status.price !== null && status.price !== undefined
                       ? status.price.toLocaleString("ko-KR", {
-                          maximumFractionDigits: 10, // 종목마다 다른 소수점 표현 허용
+                          maximumFractionDigits: 10,
                         })
                       : "-"}
                   </TableCell>

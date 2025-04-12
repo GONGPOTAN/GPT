@@ -2,6 +2,7 @@
 
 import asyncio
 import datetime
+import re
 from config.symbols import get_all_symbols
 from indicators.rsi import calculate_rsi_sma
 from indicators.ma import calculate_sma, detect_ma_crossover
@@ -19,7 +20,7 @@ MAX_ROWS = {
     "D": 730
 }
 
-# 시그널 분석 주기 실행 함수 (M15 이상 전용)
+# ✅ 시그널 분석 주기 실행 함수 (M15 이상 전용)
 async def check_higher_timeframe_signals():
     await init_db()
     intervals = {
@@ -32,10 +33,12 @@ async def check_higher_timeframe_signals():
         for symbol in symbols:
             for key, interval in intervals.items():
                 df = get_klines(symbol, market_type, interval=interval, limit=100)
-                if df.empty: continue
+                if df.empty:
+                    continue
 
                 save_candle(symbol, market_type, key, df, max_rows=MAX_ROWS[key])
 
+                # ✅ RSI 분석
                 df["rsi"] = calculate_rsi_sma(df["close"])
                 latest_rsi = df["rsi"].iloc[-1]
 
@@ -53,6 +56,7 @@ async def check_higher_timeframe_signals():
                         await mark_alert_sent(alert_id)
                         await send_telegram_message(msg)
 
+                # ✅ MA 돌파 감지 (M15 전용)
                 if key == "M15":
                     df["sma"] = calculate_sma(df)
                     direction = detect_ma_crossover(df)
@@ -63,13 +67,16 @@ async def check_higher_timeframe_signals():
                             ma = df["sma"].iloc[-1]
                             direction_txt = "상향 돌파" if direction == "bullish" else "하향 돌파"
                             emoji = "📈💥" if direction == "bullish" else "📉⚠️"
-                            msg = f"{emoji} [MA30 {direction_txt}] {symbol.upper()} ({market_type}) - {key}\n- 현재가: {price:,.1f} USDT\n- MA30: {ma:,.1f} USDT"
+                            msg = (
+                                f"{emoji} [MA30 {direction_txt}] {symbol.upper()} ({market_type}) - {key}\n"
+                                f"- 현재가: {price:,.1f} USDT\n- MA30: {ma:,.1f} USDT"
+                            )
                             await mark_alert_sent(alert_id)
                             await send_telegram_message(msg)
 
+                # ✅ 다우이론 기반 추세 감지
                 trend_msg = detect_dow_trend(df)
                 if trend_msg:
-                    import re
                     trend_type_match = re.search(r"\\((.*?)\\)", trend_msg)
                     trend_type = trend_type_match.group(1).replace(" → ", "-") if trend_type_match else "unknown"
                     alert_id = f"{symbol}-{key}-dow-{trend_type.lower()}"
@@ -80,7 +87,7 @@ async def check_higher_timeframe_signals():
                         await mark_alert_sent(alert_id)
                         await send_telegram_message(msg)
 
-# 매일 오전 9시 (UTC 00시) 전일 변동률 리포트
+# ✅ 매일 오전 9시 (UTC 00시) 전일 변동률 리포트
 async def send_daily_report():
     await init_db()
     today = datetime.datetime.utcnow()
