@@ -1,5 +1,54 @@
-.env
-*.pyc
-*.db
-*.csv
+# Python 관련
 __pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+*.sqlite3
+*.db
+
+# 환경 설정
+.env
+.env.*
+*.env
+*.secret
+secrets.json
+
+# macOS
+.DS_Store
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# 백테스트/데이터
+data/**/*.csv
+data/**/*.json
+storage/**/*.db
+
+# 프론트엔드 빌드
+frontend/.next/
+frontend/node_modules/
+frontend/package-lock.json
+frontend/yarn.lock
+
+# 프론트엔드 환경 파일
+frontend/.env.local
+frontend/.env.development
+frontend/.env.production
+
+# 로그/캐시
+*.log
+.cache/
+*.pid
+*.gz
+
+# Pytest
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+tests/__pycache__/
+
+# 기타 임시파일
+*.bak
+*.tmp
