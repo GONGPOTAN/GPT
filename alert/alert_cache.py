@@ -26,8 +26,3 @@ async def mark_alert_sent(alert_id: str):
     async with aiosqlite.connect(DB_PATH) as db:
         await db.execute("INSERT OR REPLACE INTO alerts (id) VALUES (?)", (alert_id,))
         await db.commit()
-
-# 예시 사용: 
-# await init_db()
-# if not await is_alert_sent("btc-m15-ma-bullish"):
-#     await mark_alert_sent("btc-m15-ma-bullish")

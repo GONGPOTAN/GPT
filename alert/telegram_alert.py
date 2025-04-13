@@ -30,4 +30,4 @@ async def send_telegram_message(message: str):
     except Exception as e:
         print(f"[텔레그램] 예외 발생: {e}")
 
-    await asyncio.sleep(0.5)  # 메시지 연속 발송 제한 (rate limit)
+    await asyncio.sleep(0.5)  # 메시지 연속 발송 제한

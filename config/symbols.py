@@ -3,7 +3,8 @@
 import json
 import os
 
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), "symbols.json")
+
 def get_all_symbols():
-    path = os.path.join("config", "symbols.json")
-    with open(path, "r") as f:
+    with open(CONFIG_PATH, "r") as f:
         return json.load(f)

@@ -1,17 +1,16 @@
 # indicators/trend.py
 
-import pandas as pd
-from indicators.dow_theory import detect_dow_trend
+def detect_trend_string(df):
+    from indicators.dow_theory import detect_dow_trend
 
-
-def detect_trend_string(df: pd.DataFrame) -> str:
-    """
-    다우이론 기반 추세를 문자열로 변환하는 헬퍼 함수
-    예: "상승 전환 (LL → HL)", "하락 지속 (LH → LH)" 등
-    """
-    try:
-        trend = detect_dow_trend(df)
-        return trend if trend else ""
-    except Exception as e:
-        print(f"[추세 분석 오류] {e}")
-        return ""
+    trend = detect_dow_trend(df)
+    if trend == "HH-HL":
+        return "📈 상승 추세"
+    elif trend == "LL-LH":
+        return "📉 하락 추세"
+    elif trend == "확장형":
+        return "🔁 변동성 확장"
+    elif trend == "중립":
+        return "⏸ 중립 구간"
+    else:
+        return None
