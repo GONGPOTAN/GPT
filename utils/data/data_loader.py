@@ -6,10 +6,6 @@ import pandas as pd
 BASE_PATH = "data/price"
 
 def get_latest_price(symbol: str, market: str, timeframe: str = "M1") -> float | None:
-    """
-    종목 CSV에서 마지막 close 값을 반환합니다.
-    """
-    # 'futures-btcusdt' → 'btcusdt'
     if "-" in symbol:
         _, symbol = symbol.split("-", 1)
 

@@ -5,12 +5,12 @@ from datetime import datetime
 from config.symbols import get_all_symbols
 from indicators.rsi import calculate_rsi_sma
 from indicators.trend import detect_trend_string
-from utils.candle_loader import load_candle_csv
-from core.state.status_cache import update_rsi, update_trend
+from utils.io.candle_loader import load_candle_csv  # ✅ 경로 수정됨
+from storage.status_cache.status_cache import update_rsi, update_trend  # ✅ 경로 수정됨
 
 TIMEFRAMES = ["H1", "H4", "D"]
 MIN_CANDLES = {"H1": 100, "H4": 100, "D": 100}
-INTERVAL = 60
+INTERVAL = 60  # 초 단위
 
 async def rsi_trend_worker():
     print("[📊 RSI/Trend 워커] 시작됨 - 상태 캐시 주기 갱신")
@@ -27,6 +27,7 @@ async def analyze_symbol(symbol: str, market: str):
         try:
             df = load_candle_csv(symbol, market, tf)
             if df is None or len(df) < MIN_CANDLES[tf]:
+                print(f"[⚠️ 캔들 부족] {market}-{symbol}({tf}) → {len(df) if df is not None else 0}개")
                 return
 
             rsi = calculate_rsi_sma(df["close"])

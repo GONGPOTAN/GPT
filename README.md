@@ -18,4 +18,12 @@ GPT/
 ├── alert/                    # 텔레그램 알림 시스템
 ├── config/                   # 종목 목록(symbols.json) 관리
 ├── data/                     # 실시간 저장되는 CSV 가격 데이터
+<<<<<<< HEAD
 └── frontend/                 # Next.js 기반 실시간 대시보드
+=======
+<<<<<<< HEAD
+└── frontend/                 # Next.js 기반 실시간 대시보드
+=======
+└── frontend/                 # Next.js 기반 실시간 대시보드
+>>>>>>> ca5ac79 (chore: 추가 정비)
+>>>>>>> 65e604e (🚀 시스템 전체 수정 반영: 실시간 캔들 저장, RSI/MA 시그널, 텔레그램 알림, JST 변환 등)

@@ -1,8 +1,6 @@
-# core/workers/price_worker.py
-
 import asyncio
 from config.symbols import get_all_symbols
-from utils.data_loader import get_latest_price
+from utils.data.data_loader import get_latest_price
 from core.state.status_cache import update_price
 
 SLEEP_INTERVAL = 5

@@ -1,5 +1,3 @@
-# backend/main.py
-
 import asyncio
 import platform
 import subprocess
@@ -13,6 +11,7 @@ from backend.tasks.start_rsi_worker import start_rsi_worker
 from backend.tasks.start_signal_worker import start_signal_worker
 from backend.tasks.start_volume_worker import start_volume_worker
 from backend.tasks.scheduler import register as register_scheduler
+from core.workers.send_alert_worker import send_alert_worker 
 
 def keep_mac_awake():
     if platform.system() == "Darwin":
@@ -42,6 +41,7 @@ if __name__ == "__main__":
     loop.create_task(start_rsi_worker())
     loop.create_task(start_signal_worker())
     loop.create_task(start_volume_worker())
+    loop.create_task(send_alert_worker()) 
 
     # 🕒 스케줄러 등록
     register_scheduler(loop)

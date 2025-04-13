@@ -12,6 +12,9 @@ def get_klines(symbol: str, market_type: str, interval: str = "15m", limit: int 
     """
     바이낸스에서 캔들 데이터 조회 (OHLCV)
     """
+    market_type = market_type.lower()  # ✅ 소문자 통일 (예외 방지)
+    print(f"[📦 Binance 요청] {market_type.upper()} - {symbol.upper()} - {interval}")  # ✅ 로그 추가
+
     endpoint = "/api/v3/klines" if market_type == "spot" else "/fapi/v1/klines"
     url = f"{BASE_URLS[market_type]}{endpoint}"
     params = {"symbol": symbol.upper(), "interval": interval, "limit": limit}
@@ -41,6 +44,7 @@ def get_24hr_change(symbol: str, market_type: str) -> float:
     """
     종목의 24시간 변동률(%) 반환
     """
+    market_type = market_type.lower()  # ✅ 일관성 유지
     endpoint = "/api/v3/ticker/24hr" if market_type == "spot" else "/fapi/v1/ticker/24hr"
     url = f"{BASE_URLS[market_type]}{endpoint}"
 

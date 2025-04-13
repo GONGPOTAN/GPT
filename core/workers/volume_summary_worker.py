@@ -1,39 +1,30 @@
 # core/workers/volume_summary_worker.py
-
 import asyncio
 from datetime import datetime
-from core.state.status_cache import status_cache
-from core.queue.signal_queue import signal_queue
+from config.symbols import get_all_symbols
+from indicators.volume import detect_volume_spike
+from utils.io.candle_loader import load_candle_csv
+from core.state.status_cache import update_volume_signal
 
-VOLUME_LOOKBACK = 20
-VOLUME_SPIKE_MULTIPLIER = 10
-INTERVAL = 60  # 60초마다 검사
+INTERVAL = 30
 
 async def volume_summary_worker():
-    print("[📈 거래량 유지 워커] 시작됨")
+    print("[🔥 거래량 워커] 시작됨 - 급등 탐지")
+    symbols_by_market = get_all_symbols()
 
     while True:
+        for market, symbols in symbols_by_market.items():
+            for symbol in symbols:
+                await analyze_volume(symbol, market)
         await asyncio.sleep(INTERVAL)
-        now = datetime.utcnow()
-        minute_key = now.strftime("%Y%m%d%H%M")
 
-        entries = []
-
-        for symbol, tf_data in status_cache.items():
-            m1 = tf_data.get("M1", {})
-            history = m1.get("volume_history", [])
-            current = m1.get("current_volume")
-            market = m1.get("market", "")
-
-            if current and len(history) >= VOLUME_LOOKBACK:
-                avg_volume = sum(history[-VOLUME_LOOKBACK:]) / VOLUME_LOOKBACK
-                if current > avg_volume * VOLUME_SPIKE_MULTIPLIER:
-                    entries.append(f"{symbol.upper()} ({market})")
-
-        if entries:
-            msg = (
-                f"⏳ [거래량 유지] {len(entries)}종목\n"
-                f"- {' / '.join(entries)} 에서 거래량이 여전히 높은 상태입니다 (3분 이내)"
-            )
-            await signal_queue.put({"message": msg})
-            print(f"[📤 알림] 거래량 유지 종목: {entries}")
+async def analyze_volume(symbol: str, market: str):
+    try:
+        df = load_candle_csv(symbol, market, "M1")
+        if df is None or len(df) < 21:
+            return
+        if detect_volume_spike(df):
+            update_volume_signal(symbol, market, True)
+            print(f"[📈 거래량 급등] {market}-{symbol}")
+    except Exception as e:
+        print(f"[❌ 거래량 분석 오류] {market}-{symbol} → {e}")

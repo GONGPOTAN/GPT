@@ -13,7 +13,9 @@ def save_candle(symbol: str, market: str, timeframe: str, df: pd.DataFrame, max_
         print(f"[📂 저장 생략] {symbol.upper()} ({market}) {timeframe} → 데이터 없음")
         return
 
-    df["timestamp"] = pd.to_datetime(df["timestamp"])
+    df["timestamp"] = pd.to_datetime(df["timestamp"]).dt.tz_localize("UTC").dt.tz_convert("Asia/Seoul")  # ✅ JST 변환
+    df["timestamp"] = df["timestamp"].dt.strftime("%Y-%m-%d %H:%M:%S")  # 보기 좋게 문자열 변환
+
     save_dir = os.path.join(BASE_PATH, market, timeframe)
     os.makedirs(save_dir, exist_ok=True)
     file_path = os.path.join(save_dir, f"{symbol}.csv")
@@ -22,6 +24,7 @@ def save_candle(symbol: str, market: str, timeframe: str, df: pd.DataFrame, max_
         if os.path.exists(file_path):
             old_df = pd.read_csv(file_path)
             old_df["timestamp"] = pd.to_datetime(old_df["timestamp"])
+            df["timestamp"] = pd.to_datetime(df["timestamp"])
             df = pd.concat([old_df, df], ignore_index=True)
 
         df = (
