@@ -1,5 +1,3 @@
-# core/status_cache.py
-
 from collections import defaultdict
 from datetime import datetime
 import threading
@@ -22,7 +20,7 @@ signal_event_cache = []  # 최근 시그널 이벤트 리스트
 def update_price(symbol: str, market: str, price: float):
     key = f"{market}-{symbol.lower()}"
     with _cache_lock:
-        status_cache[key]["price"] = price
+        status_cache[key]["price"] = float(price)  # 🔧 float 명시적 변환
         status_cache[key]["updated_at"] = datetime.utcnow()
 
 # ✅ RSI 업데이트 함수
@@ -42,7 +40,9 @@ def update_trend(symbol: str, market: str, timeframe: str, trend_str: str):
 # ✅ FastAPI에서 참조할 전체 상태 반환 함수
 def get_all_status():
     with _cache_lock:
-        return dict(status_cache)
+        status = dict(status_cache)
+        print("[🔍 FastAPI] status_cache 반환:", status)  # 🔧 디버깅 로그 추가
+        return status
 
 # ✅ FastAPI용 단일 종목 가격 반환
 def get_price(symbol: str):

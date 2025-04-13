@@ -14,10 +14,14 @@ async def price_worker():
             for market, symbol_list in symbols_by_market.items():
                 for symbol in symbol_list:
                     try:
+                        print(f"[🔍 디버깅] 가격 조회 시도 중: {market}-{symbol}")
                         latest_price = get_latest_price(symbol, market, "M1")
+                        print(f"[🔍 디버깅] 결과 → {latest_price}")
                         if latest_price is not None:
                             update_price(symbol, market, latest_price)
                             print(f"[📈 가격 업데이트] {market.upper()}-{symbol.upper()} → {latest_price}")
+                        else:
+                            print(f"[⚠️ 가격 없음] {market}-{symbol} → None")
                     except Exception as e:
                         print(f"[❌ 가격 오류] {market}-{symbol} 갱신 실패: {e}")
         except Exception as e:

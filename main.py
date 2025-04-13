@@ -22,11 +22,15 @@ from core.price_worker import price_worker  # ✅ 가격 캐시 업데이트 워
 
 # ✅ FastAPI 서버 함께 실행
 import uvicorn
-from backend_api import api  # ← FastAPI 앱(app)은 여기서 가져옵니다.
+from backend_api.api import app  # ← FastAPI 앱(app)은 여기서 가져옵니다.
 
 def start_fastapi():
-    # ✅ Render 등 외부 서비스에서 접근 가능하도록 0.0.0.0 으로 변경
-    uvicorn.run(api.app, host="0.0.0.0", port=8000, log_level="info")
+    import nest_asyncio
+    nest_asyncio.apply()
+    config = uvicorn.Config(app, host="0.0.0.0", port=8000, log_level="info")
+    server = uvicorn.Server(config)
+    loop = asyncio.get_event_loop()
+    loop.create_task(server.serve())
 
 if __name__ == "__main__":
     print("🚀 GPT-Trading-Bot 시스템 시작")
@@ -39,8 +43,8 @@ if __name__ == "__main__":
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
 
-    # ✅ FastAPI 백그라운드 실행
-    threading.Thread(target=start_fastapi, daemon=True).start()
+    # ✅ FastAPI 비동기 루프에서 실행
+    start_fastapi()
 
     # 주요 비동기 작업 등록
     loop.create_task(start_ws_listener())
