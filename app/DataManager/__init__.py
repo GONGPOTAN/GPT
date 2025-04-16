@@ -1,7 +1,7 @@
 from .price_fetcher import PriceFetcher
 from .candle_builder import CandleBuilder
 
-class DataManager:
+class datamanager:
     def __init__(self):
         self.fetcher = PriceFetcher()
         self.builder = CandleBuilder()
