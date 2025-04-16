@@ -1,17 +1,23 @@
 import time
 import subprocess
+import schedule
 from datetime import datetime, timedelta
 from app.datamanager.datamanager import update_all_csv
 from app.analyzer.analyzer import analyze_all
 from app.signal.signal import run_signals
 from app.logger.logger import safe_log
+from app.notifier.daily_report import report_daily_change
 
 def main():
-    caffeinate_proc = subprocess.Popen(["caffeinate", "-imu"])
+    schedule.every().day.at("09:00").do(report_daily_change)
+
+    # Mac 절전 방지
+    caffeinate_proc = subprocess.Popen(["caffeinate"])
     safe_log("☕️ caffeinate 활성화됨 – Mac 절전 방지")
+
     try:
-        safe_log("[▶️] datamanager 시작")
         while True:
+            schedule.run_pending()
             start = datetime.now()
             update_all_csv()
             safe_log("[▶️] Analyzer 시작")
@@ -21,7 +27,7 @@ def main():
             safe_log("[▶️] Signal 분석 시작")
             run_signals()
             safe_log("[✅] Signal 분석 완료")
-            
+
             safe_log("[✅] datamanager 구동 완료")
 
             next_tick = (start + timedelta(minutes=1)).replace(second=0, microsecond=0)

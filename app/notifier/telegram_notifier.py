@@ -11,7 +11,7 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 def send_telegram_message(message: str):
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
-        print("[!] Telegram 설정이 없습니다.")
+        print("[⚠️] Telegram 설정이 없습니다.")
         return
 
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
