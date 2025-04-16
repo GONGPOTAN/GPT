@@ -1,6 +1,8 @@
+from config.analysis import ANALYSIS_CONFIG
 import pandas as pd
 
-def analyze_dow(df: pd.DataFrame, lookback: int = 20) -> dict:
+def analyze_dow(df: pd.DataFrame) -> dict:
+    lookback = ANALYSIS_CONFIG.get("DOW_TREND_LENGTH", 20)
     if len(df) < lookback or not {"high", "low"}.issubset(df.columns):
         return {}
 

@@ -1,6 +1,8 @@
 import pandas as pd
+from config.analysis import ANALYSIS_CONFIG
 
-def analyze_rsi(df: pd.DataFrame, period: int = 14) -> dict:
+def analyze_rsi(df: pd.DataFrame) -> dict:
+    period = ANALYSIS_CONFIG.get("RSI_PERIOD", 14)
     if len(df) < period + 1 or "close" not in df.columns:
         return {}
 
