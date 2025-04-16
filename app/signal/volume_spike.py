@@ -13,7 +13,7 @@ def check_signal(df: pd.DataFrame, interval: str) -> list:
 
     if recent_volume > avg_volume * 10:
         results.append({
-            "type": "거래량급등",
+            "type": "volume_spike",
             "scope": "M1",
             "detail": f"1분 거래량이 평균({avg_volume:.2f})의 10배 초과 (현재: {recent_volume:.2f})"
         })

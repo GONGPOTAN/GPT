@@ -1,6 +1,7 @@
 import pandas as pd
 import importlib
 from config.symbols import SYMBOLS
+from app.notifier.notifier import notify_signal
 
 SIGNAL_MODULES = [
     "ma_cross",
@@ -23,9 +24,13 @@ def run_signals():
                         signal_module = importlib.import_module(f"app.signal.{mod}")
                         signals = signal_module.check_signal(df, interval)
                         if signals:
-                            print(f"[시그널 발생] {market_type}/{symbol} {interval}")
-                            # for sig in signals:
-                            #     print(sig)
+                            for sig in signals:
+                                sig.update({
+                                    "market_type": market_type,
+                                    "symbol": symbol,
+                                    "interval": interval
+                                })
+                            notify_signal(signals)
 
                 except FileNotFoundError:
                     continue
