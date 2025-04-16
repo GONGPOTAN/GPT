@@ -51,3 +51,9 @@ def log_system_event(event_type, message):
 
     with open(log_path, "w", encoding="utf-8") as f:
         json.dump(log_data, f, ensure_ascii=False, indent=2)
+
+def safe_log(message):
+    try:
+        print(message)
+    except Exception:
+        pass

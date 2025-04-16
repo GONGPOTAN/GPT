@@ -23,6 +23,6 @@ def send_telegram_message(message: str):
     try:
         response = requests.post(url, data=payload)
         if response.status_code != 200:
-            print(f"[!] 텔레그램 전송 실패: {response.text}")
+            print(f"[⚠️] 텔레그램 전송 실패: {response.status_code} - {response.reason}")
     except Exception as e:
-        print(f"[!] 텔레그램 전송 예외 발생: {e}")
+        print("[⚠️] 텔레그램 전송 중 예외 발생")
