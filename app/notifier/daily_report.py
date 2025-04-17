@@ -26,11 +26,15 @@ def report_daily_change():
     messages = [header]
 
     for market_type, symbols in SYMBOLS.items():
-        messages.append(f"\n📊 {market_type.upper()}")
+        if not symbols:
+            continue
+        section = [f"\n📊 {market_type.upper()}"]
         for symbol in symbols:
             result = get_yesterday_change(symbol, market_type)
             if result:
-                messages.append(f"- {result}")
+                section.append(f"- {result}")
+        if len(section) > 1:
+            messages.extend(section)
 
     text = "\n".join(messages)
     send_telegram_message(text)

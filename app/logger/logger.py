@@ -25,6 +25,9 @@ def log_analysis_result(market_type, symbol, interval, result):
 
     log_data.append(log_entry)
 
+    MAX_ENTRIES = 150
+    log_data = log_data[-MAX_ENTRIES:]
+
     with open(log_path, "w", encoding="utf-8") as f:
         json.dump(log_data, f, ensure_ascii=False, indent=2)
 
