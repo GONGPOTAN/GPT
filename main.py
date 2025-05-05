@@ -2,7 +2,7 @@ import time
 import subprocess
 import schedule
 from datetime import datetime, timedelta
-from app.datamanager.datamanager import update_all_csv
+from app.DataManager.DataManager import update_all_csv
 from app.analyzer.analyzer import analyze_all
 from app.signal.signal import run_signals
 from app.logger.logger import safe_log

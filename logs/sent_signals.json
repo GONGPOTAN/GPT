@@ -1,17 +1,12 @@
 {
-  "futures-BTCUSDT-D1-rsi_signal": "2025-05-05T19:00:25.047325",
-  "futures-ETHUSDT-D1-rsi_signal": "2025-05-05T19:00:26.160939",
-  "futures-ETHUSDT-W1-rsi_signal": "2025-05-05T19:00:27.176886",
-  "futures-TONUSDT-H4-ma_cross": "2025-05-05T19:00:28.260541",
-  "futures-TONUSDT-H4-rsi_signal": "2025-05-05T19:00:29.278710",
-  "futures-XRPUSDT-M1-ma_cross": "2025-05-05T19:03:03.717147",
-  "futures-TONUSDT-M15-ma_cross": "2025-05-05T19:04:03.779056",
-  "futures-BTCUSDT-M15-breakout": "2025-05-05T19:05:04.689771",
-  "futures-SOLUSDT-M15-ma_cross": "2025-05-05T19:16:34.389857",
-  "futures-XRPUSDT-M15-breakout": "2025-05-05T19:19:40.340550",
-  "futures-BTCUSDT-H4-rsi_signal": "2025-05-05T19:30:06.494647",
+  "futures-BTCUSDT-D1-rsi_signal": "2025-05-05T20:27:27.526495",
+  "futures-BTCUSDT-H4-rsi_signal": "2025-05-05T20:30:07.467225",
   "futures-ETHUSDT-M15-breakout": "2025-05-05T19:31:16.823508",
   "futures-BTCUSDT-M15-ma_cross": "2025-05-05T19:38:32.742319",
   "futures-BTCUSDT-M1-volume_spike": "2025-05-05T19:40:04.379815",
-  "futures-TONUSDT-H1-rsi_signal": "2025-05-05T19:40:05.666620"
+  "futures-TONUSDT-H1-rsi_signal": "2025-05-05T19:40:05.666620",
+  "futures-ETHUSDT-D1-rsi_signal": "2025-05-05T20:27:27.531983",
+  "futures-ETHUSDT-W1-rsi_signal": "2025-05-05T20:27:27.532797",
+  "futures-TONUSDT-H4-ma_cross": "2025-05-05T20:27:27.545925",
+  "futures-TONUSDT-H4-rsi_signal": "2025-05-05T20:27:27.546337"
 }

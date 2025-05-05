@@ -1,7 +1,7 @@
 import os
 import time
-from app.datamanager import datamanager
-from app.datamanager.price_fetcher import should_update
+from app.DataManager import datamanager
+from app.DataManager.price_fetcher import should_update
 from config.symbols import SYMBOLS
 from datetime import datetime, timedelta
 import pandas as pd
