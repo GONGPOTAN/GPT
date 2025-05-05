@@ -10,6 +10,7 @@ from app.notifier.daily_report import report_daily_change
 
 def main():
     schedule.every().day.at("09:00").do(report_daily_change)
+    report_daily_change()
 
     # Mac 절전 방지
     caffeinate_proc = subprocess.Popen(["caffeinate"])

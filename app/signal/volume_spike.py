@@ -15,7 +15,7 @@ def check_signal(df: pd.DataFrame, interval: str) -> list:
         results.append({
             "type": "volume_spike",
             "scope": "M1",
-            "detail": f"1분 거래량이 평균({avg_volume:.2f})의 10배 초과 (현재: {recent_volume:.2f})"
+            "detail": f"1분 거래량이 평균({avg_volume:,.2f})의 10배 초과 (현재: {recent_volume:,.2f})"
         })
 
     return results

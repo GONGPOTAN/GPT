@@ -46,6 +46,10 @@ def save_candles_to_csv():
         for future in as_completed(futures):
             future.result()
 
+    # After all futures are completed, update the level JSON files
+    import subprocess
+    subprocess.run(["python3", "app/datamanager/generate_levels.py"])
+
 update_all_csv = save_candles_to_csv
 
 if __name__ == "__main__":
